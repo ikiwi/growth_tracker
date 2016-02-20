@@ -1,3 +1,5 @@
+  - [![Build](http://img.shields.io/travis-ci/ilyakatz/growth_tracker.svg?style=flat-square)](https://travis-ci.org/growth_tracker)
+
 # README
 
 ## Prerequisites
