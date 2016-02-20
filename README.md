@@ -6,7 +6,9 @@
 
 ## Insall application dependencies
 
-` bundle install`
+`bundle install`
+
+`rake db:create db:migrate `
 
 ## Run the server
 
