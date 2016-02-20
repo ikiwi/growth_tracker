@@ -19,3 +19,13 @@
 Open in the browser
 
 localhost:3000
+
+## Run tests
+
+### All tests
+
+`rspec`
+
+### Individual tests
+
+`rspec spec/controllers/stories_controller_spec.rb `
