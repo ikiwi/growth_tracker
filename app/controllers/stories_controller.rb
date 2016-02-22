@@ -2,6 +2,7 @@ class StoriesController < ApplicationController
   respond_to :json
 
   def index
-    respond_with {}
+    @stories = Story.all
+    respond_with (@stories)
   end
 end
