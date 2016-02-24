@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Story.find_or_create_by(title: 'Elevator Conversation', text: 'Me: I started drawing comic. Ilya: What about? Me: My sad little life.')
