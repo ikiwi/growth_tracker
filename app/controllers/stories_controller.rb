@@ -5,4 +5,5 @@ class StoriesController < ApplicationController
     @stories = Story.all
     render json: @stories, :except => [:created_at, :updated_at]
   end
+
 end

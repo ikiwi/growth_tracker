@@ -1,5 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Tag, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+    
+  describe 'new' do
+    it 'creates a new tag' do
+      tag = Tag.new(:story_id => 0)
+      expect(tag.story_id).to eq 0
+    end
+  end
+  
 end
