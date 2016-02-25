@@ -3,6 +3,6 @@ class StoriesController < ApplicationController
 
   def index
     @stories = Story.all
-    render json: @stories, :except => [:created_at, :updated_at]
+    render json: @stories, except: [:created_at, :updated_at]
   end
 end
