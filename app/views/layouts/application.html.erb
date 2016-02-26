@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<html lang="en" ng-app="growth_tracker">
 <head>
   <title>GrowthTracker</title>
   <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 </head>
-<body>
+<body ng-controller="MainCtrl">
 
 <%= yield %>
 

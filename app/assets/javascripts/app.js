@@ -14,3 +14,20 @@
 // require jquery_ujs
 // require turbolinks
 // require_tree .
+
+var app = angular.module('growth_tracker', []);
+
+app.controller('MainCtrl', function ($scope, $http) {
+  var query = "/stories.json";
+  $scope.tag = "";
+
+  $http.get(query).then(
+    function (success) {
+      console.log(success);
+      $scope.stories = success.data;
+    },
+    function (error) {
+      console.log(error);
+    }
+  );
+});
