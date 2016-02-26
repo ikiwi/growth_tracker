@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160221211527) do
+ActiveRecord::Schema.define(version: 20160226074951) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20160221211527) do
     t.string   "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "hashtag"
   end
 
   create_table "tags", force: :cascade do |t|
