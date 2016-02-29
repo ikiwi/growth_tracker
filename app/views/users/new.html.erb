@@ -1,5 +1,5 @@
 <div>
-  <%= form_for :user, url: '/users' do |f| %>
+  <%= form_for :user, url: new_user_path do |f| %>
     <%= f.label :username %>
     <%= f.text_field :username %>
     <br>
