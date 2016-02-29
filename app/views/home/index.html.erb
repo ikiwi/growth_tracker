@@ -1,9 +1,4 @@
-
-<% if current_user.present? %>
-<h1>Hello <%= current_user.username %>!</h1>
-<% else %>
 <h1>Hello!</h1>
-<% end %>
 <h2>Featured stories:</h2>
 <table>
 <tr ng-repeat="story in stories">
@@ -22,9 +17,7 @@
 </tr>
 </table>
 <br>
-<% if current_user.blank? %>
-  <%= link_to "Sign up", new_user_path %>
-  <% if flash[:notice] %>
-  <%= flash[:notice] %>
-  <% end %>
+<%= link_to "Sign up", new_user_path %>
+<% if flash[:notice] %>
+<%= flash[:notice] %>
 <% end %>
