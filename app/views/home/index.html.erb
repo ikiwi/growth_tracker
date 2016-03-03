@@ -18,7 +18,21 @@
 </table>
 
 <br>
+<div>
+  <%= form_for :goal, url: goals_path do |f| %>
+    <%= f.label :title, "What would you like to do" %>
+    <%= f.text_field :title %>
+    <br>
+    <%= f.label :desc, "Why is it important to you" %>
+    <%= f.text_field :desc %>
+    <br>
+    <%= f.submit "Add Goal" %>
+  <% end %>
+</div>
+
+<br>
 <%= link_to "Sign up", new_user_path %>
 <% if flash[:notice] %>
 <%= flash[:notice] %>
 <% end %>
+

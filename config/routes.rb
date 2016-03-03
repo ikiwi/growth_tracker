@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :users
 
+  resources :goals
+
   scope defaults: {format: :json} do
     resources :stories
   end
