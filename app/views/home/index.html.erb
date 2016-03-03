@@ -30,6 +30,13 @@
   <% end %>
 </div>
 
+<table>
+<tr ng-repeat="goal in goals">
+  <td width="20%">{{goal.title}}</td>
+  <td width="80%">{{goal.desc}}</td>
+</tr>
+</table>
+
 <br>
 <%= link_to "Sign up", new_user_path %>
 <% if flash[:notice] %>
