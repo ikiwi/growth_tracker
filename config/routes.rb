@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   resources :goals
 
+  resources :sessions, only: [:new, :create]
+
+  delete 'logout' => 'sessions#destroy'
+
   scope defaults: {format: :json} do
     resources :stories
   end

@@ -1,4 +1,22 @@
-<h1>Hello!</h1>
+<% if current_user.present? %>
+  <h1>Hello <%= current_user.username %>!</h1>
+  <%= button_to "Logout", logout_path, method: :delete %>
+<% else %>
+  <h1>Hello!</h1>
+  <div>
+      <%= form_for :user, url: sessions_path do |f| %>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+        <br>
+        <%= f.label :password %>
+        <%= f.text_field :password %>
+        <br>
+        <%= f.submit "Login" %>
+      <% end %>
+  </div>
+  <%= button_to "Sign up", new_user_path %>
+<% end %>
+
 <h2>Featured stories:</h2>
 <table>
 <tr ng-repeat="story in stories">
@@ -33,12 +51,12 @@
 <table>
 <tr ng-repeat="goal in goals">
   <td width="20%">{{goal.title}}</td>
-  <td width="80%">{{goal.desc}}</td>
+  <td width="70%">{{goal.desc}}</td>
+  <td width="10%"><a href="#" ng-click="editGoal(goal)">edit</a> | <a href="#" ng-click="removeGoal(goal)">delete</a></td>
 </tr>
 </table>
 
 <br>
-<%= link_to "Sign up", new_user_path %>
 <% if flash[:notice] %>
 <%= flash[:notice] %>
 <% end %>
