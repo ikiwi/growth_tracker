@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
   def index
-    @goals = Goal.all
+    @goals = Goal.where(user_id: current_user.id)
     render json: @goals, except: [:created_at, :updated_at]
   end
   
