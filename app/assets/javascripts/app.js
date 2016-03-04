@@ -15,6 +15,8 @@
 // require turbolinks
 // require_tree .
 
+
+//= require angular.min
 var app = angular.module('growth_tracker', []);
 
 app.controller('MainCtrl', function ($scope, $http) {

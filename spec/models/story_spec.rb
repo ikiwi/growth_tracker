@@ -1,5 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Story, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'creates a new story' do
+    story = Story.new(:title => "Bootie", :text => "I almost got into a fight with a guy who requested me to pay for his spilled drink.")
+    expect(story.title).to eq "Bootie"
+  end
+end
+
+RSpec.describe StoriesController, :type => :controller do
+  it "returns featured stories" do
+    story = Story.create(
+      title: "Bootie",
+      text: "I almost got into a fight with a guy who requested me to pay for his spilled drink."
+    )
+
+    get :index, format: :json
+    expect(response).to be_success
+  end
 end
