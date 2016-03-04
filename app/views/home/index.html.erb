@@ -14,7 +14,7 @@
         <%= f.submit "Login" %>
       <% end %>
   </div>
-  <%= button_to "Sign up", new_user_path %>
+  <%= button_to "Sign up", new_user_path, method: :get %>
 <% end %>
 
 <h2>Featured stories:</h2>
@@ -36,6 +36,7 @@
 </table>
 
 <br>
+<% if current_user.present? %>
 <div>
   <%= form_for :goal, url: goals_path do |f| %>
     <%= f.label :title, "What would you like to do" %>
@@ -44,6 +45,7 @@
     <%= f.label :desc, "Why is it important to you" %>
     <%= f.text_field :desc %>
     <br>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
     <%= f.submit "Add Goal" %>
   <% end %>
 </div>
@@ -55,6 +57,7 @@
   <td width="10%"><a href="#" ng-click="editGoal(goal)">edit</a> | <a href="#" ng-click="removeGoal(goal)">delete</a></td>
 </tr>
 </table>
+<% end %>
 
 <br>
 <% if flash[:notice] %>
