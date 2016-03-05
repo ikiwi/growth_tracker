@@ -24,14 +24,7 @@ RSpec.feature "Users", :type => :feature do
 
   scenario "#Login#success" do
 
-    visit "/users/new"
-
-    fill_in "Username", :with => "k"
-    fill_in "Email", :with => "kalai.wei@gmail.com"
-    fill_in "Password", :with => "k"
-    click_button "Sign Up"
-
-    click_button "Logout"
+    user = User.create(username: "k", email: "kalai.wei@gmail.com", password: "k")
 
     visit "/"
 
