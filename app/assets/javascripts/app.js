@@ -15,13 +15,60 @@
 // require turbolinks
 // require_tree .
 
-var app = angular.module('growth_tracker', []);
+var app = angular.module('growth_tracker', ['ui.router']);
+
+app.config(function($stateProvider, $urlRouterProvider) {
+  //
+  // For any unmatched url, redirect to /
+  $urlRouterProvider.otherwise("/");
+  //
+  // Now set up the states
+  $stateProvider
+    .state('index', {
+      url: "",
+      views: {
+        'stories-index': {
+          templateUrl: "templates/stories-index.html",
+          controller: 'StoriesIndexCtrl'
+        },
+        'goals-index': {
+          templateUrl: "templates/goals-index.html",
+          controller: 'GoalsIndexCtrl'
+        }
+      }
+    })
+    .state('stories', {
+      url: "/stories",
+      views: {
+        'stories-index': {
+          templateUrl: "templates/stories-index.html",
+          controller: 'StoriesIndexCtrl'
+        }
+        //'stories-edit':
+        //'stories-delete':
+      }
+    })
+    .state('goals', {
+      url: "/goals",
+      views: {
+        'goals-index': {
+          templateUrl: "templates/goals-index.html",
+          controller: 'GoalsIndexCtrl'
+        }
+        //'goals-edit':
+        //'goals-delete':
+      }
+    })
+});
 
 app.controller('MainCtrl', function ($scope, $http) {
-  var query_story = "/stories.json";
+});
+
+app.controller('StoriesIndexCtrl', function ($scope, $http) {
+  var query = "/stories.json";
   $scope.tag = "";
 
-  $http.get(query_story).then(
+  $http.get(query).then(
     function (success) {
       console.log(success);
       $scope.stories = success.data;
@@ -30,11 +77,13 @@ app.controller('MainCtrl', function ($scope, $http) {
       console.log(error);
     }
   );
+});
 
-  var query_goal = "/goals.json";
+app.controller('GoalsIndexCtrl', function ($scope, $http) {
+  var query = "/goals.json";
   $scope.tag = "";
 
-  $http.get(query_goal).then(
+  $http.get(query).then(
     function (success) {
       console.log(success);
       $scope.goals = success.data;
