@@ -17,6 +17,7 @@
   <%= button_to "Sign up", new_user_path, method: :get %>
 <% end %>
 
+<ui-view></ui-view>
 <div ui-view="stories-index"></div>
 
 <% if current_user.present? %>
@@ -32,9 +33,7 @@
     <%= f.submit "Add Goal" %>
   <% end %>
 </div>
-
 <div ui-view="goals-index"></div>
-
 <% end %>
 
 <br>

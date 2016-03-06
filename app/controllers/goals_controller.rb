@@ -4,6 +4,11 @@ class GoalsController < ApplicationController
     render json: @goals, except: [:created_at, :updated_at]
   end
   
+  def show
+    @goal = Goal.find_by_id(params[:id])
+    render json: @goal, except: [:created_at, :updated_at]
+  end
+
   def create
       @goal = Goal.new(goal_params)
       if @goal.save

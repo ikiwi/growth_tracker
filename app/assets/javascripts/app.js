@@ -24,7 +24,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   //
   // Now set up the states
   $stateProvider
-    .state('index', {
+    .state('main', {
       url: "",
       views: {
         'stories-index': {
@@ -37,27 +37,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     })
+    
     .state('stories', {
-      url: "/stories",
-      views: {
-        'stories-index': {
-          templateUrl: "templates/stories-index.html",
-          controller: 'StoriesIndexCtrl'
-        }
-        //'stories-edit':
-        //'stories-delete':
-      }
+      url: "/stories/{story_id: [0-9]{1,8}}",
+      templateUrl: "templates/story-show.html",
+      controller: 'StoryShowCtrl'
     })
+    
     .state('goals', {
-      url: "/goals",
-      views: {
-        'goals-index': {
-          templateUrl: "templates/goals-index.html",
-          controller: 'GoalsIndexCtrl'
-        }
-        //'goals-edit':
-        //'goals-delete':
-      }
+      url: "/goals/{goal_id: [0-9]{1,8}}",
+      templateUrl: "templates/goal-show.html",
+      controller: 'GoalShowCtrl'
     })
 });
 
@@ -79,6 +69,21 @@ app.controller('StoriesIndexCtrl', function ($scope, $http) {
   );
 });
 
+app.controller('StoryShowCtrl', function ($scope, $http, $stateParams) {
+  var query = "/stories/" + $stateParams.story_id;
+  $scope.tag = "";
+
+  $http.get(query).then(
+    function (success) {
+      console.log(success);
+      $scope.story = success.data;
+    },
+    function (error) {
+      console.log(error);
+    }
+  );
+});
+
 app.controller('GoalsIndexCtrl', function ($scope, $http) {
   var query = "/goals.json";
   $scope.tag = "";
@@ -87,6 +92,22 @@ app.controller('GoalsIndexCtrl', function ($scope, $http) {
     function (success) {
       console.log(success);
       $scope.goals = success.data;
+    },
+    function (error) {
+      console.log(error);
+    }
+  );
+});
+
+
+app.controller('GoalShowCtrl', function ($scope, $http, $stateParams) {
+  var query = "/goals/" + $stateParams.goal_id;
+  $scope.tag = "";
+
+  $http.get(query).then(
+    function (success) {
+      console.log(success);
+      $scope.goal = success.data;
     },
     function (error) {
       console.log(error);
