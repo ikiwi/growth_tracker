@@ -1,9 +1,11 @@
 class GoalsController < ApplicationController
+  skip_before_filter  :verify_authenticity_token
+
   def index
     @goals = Goal.where(user_id: current_user.id)
     render json: @goals, except: [:created_at, :updated_at]
   end
-  
+
   def show
     @goal = Goal.find_by_id(params[:id])
     render json: @goal, except: [:created_at, :updated_at]
@@ -11,19 +13,16 @@ class GoalsController < ApplicationController
 
   def create
       @goal = Goal.new(goal_params)
-      if @goal.save
-        flash[:notice] = "#{@goal.title} saved!"
-      else
-        flash[:notice] = "Error saving #{@goal.title}"
-      end
-      redirect_to root_path
+      @goal.user_id = current_user.id
+      @goal.save
+      render json: @goal, except: [:created_at, :updated_at]
   end
 
   def save
   end
-  
+
   private
     def goal_params
-      params.require(:goal).permit(:title, :desc, :user_id)
+      params.require(:goal).permit(:title, :desc)
     end
 end

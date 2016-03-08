@@ -43,15 +43,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: "templates/story-show.html",
       controller: 'StoryShowCtrl'
     })
-    
+
     .state('goals', {
       url: "/goals/{goal_id: [0-9]{1,8}}",
       templateUrl: "templates/goal-show.html",
       controller: 'GoalShowCtrl'
     })
+
 });
 
 app.controller('MainCtrl', function ($scope, $http) {
+
 });
 
 app.controller('StoriesIndexCtrl', function ($scope, $http) {
@@ -85,8 +87,21 @@ app.controller('StoryShowCtrl', function ($scope, $http, $stateParams) {
 });
 
 app.controller('GoalsIndexCtrl', function ($scope, $http) {
+
   var query = "/goals.json";
   $scope.tag = "";
+
+  $scope.addGoal = function() {
+    $http.post('/goals', $scope.goal).then(
+        function (success) {
+          console.log("saved goal " + $scope.goal.title);
+          $scope.goals.push(success.data);
+          $scope.goal = {};
+        },
+        function (error) {
+          console.log("error");
+        }
+    )};
 
   $http.get(query).then(
     function (success) {
@@ -98,7 +113,6 @@ app.controller('GoalsIndexCtrl', function ($scope, $http) {
     }
   );
 });
-
 
 app.controller('GoalShowCtrl', function ($scope, $http, $stateParams) {
   var query = "/goals/" + $stateParams.goal_id;
