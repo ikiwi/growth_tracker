@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'capybara'
 gem 'bcrypt'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.1'
@@ -24,6 +23,10 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4'
+  gem 'poltergeist'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
 end
 
 group :development do
