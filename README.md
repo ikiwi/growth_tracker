@@ -1,4 +1,4 @@
-  - [![Build](http://img.shields.io/travis-ci/ilyakatz/growth_tracker.svg?style=flat-square)](https://travis-ci.org/ilyakatz/growth_tracker)
+  - [![Build](http://img.shields.io/travis-ci/ikiwi/growth_tracker.svg?style=flat-square)](https://travis-ci.org/ikiwi/growth_tracker)
 
 # README
 
