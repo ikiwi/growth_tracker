@@ -17,6 +17,18 @@
 
 var app = angular.module('growth_tracker', ['ui.router']);
 
+app.filter('getById', function() {
+  return function(input, id) {
+    var i=0, len=input.length;
+    for (; i<len; i++) {
+      if (+input[i].id == +id) {
+        return input[i];
+      }
+    }
+    return null;
+  }
+});
+
 app.config(function($stateProvider, $urlRouterProvider) {
   //
   // For any unmatched url, redirect to /
@@ -53,7 +65,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 app.controller('MainCtrl', function ($scope, $http) {
-
 });
 
 app.controller('StoriesIndexCtrl', function ($scope, $http) {
@@ -86,7 +97,7 @@ app.controller('StoryShowCtrl', function ($scope, $http, $stateParams) {
   );
 });
 
-app.controller('GoalsIndexCtrl', function ($scope, $http) {
+app.controller('GoalsIndexCtrl', function ($scope, $http, $stateParams, $filter) {
 
   var query = "/goals.json";
   $scope.tag = "";
@@ -94,8 +105,8 @@ app.controller('GoalsIndexCtrl', function ($scope, $http) {
   $scope.addGoal = function() {
     $http.post('/goals', $scope.goal).then(
         function (success) {
-          console.log("saved goal " + $scope.goal.title);
           $scope.goals.push(success.data);
+          console.log("saved goal " + $scope.goal.title);
           $scope.goal = {};
         },
         function (error) {
@@ -103,15 +114,32 @@ app.controller('GoalsIndexCtrl', function ($scope, $http) {
         }
     )};
 
-  $http.get(query).then(
-    function (success) {
-      console.log(success);
-      $scope.goals = success.data;
-    },
-    function (error) {
-      console.log(error);
+    $http.get(query).then(
+      function (success) {
+        console.log(success);
+        $scope.goals = success.data;
+      },
+      function (error) {
+        console.log(error);
+    });
+
+    $scope.deleteGoal = function($stateParams) {
+      var query = "/goals/" + $stateParams.goal_id;
+      $scope.tag = "";
+
+      $http.delete(query).then(
+        function (success) {
+          console.log(success);
+          if ($scope.goals) {
+            var goal = $filter('getById')($scope.goals, $stateParams.goal_id);
+            $scope.goals.splice($scope.goals.indexOf(goal),1);
+          }
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
     }
-  );
 });
 
 app.controller('GoalShowCtrl', function ($scope, $http, $stateParams) {

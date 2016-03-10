@@ -24,9 +24,11 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4'
   gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'
+
 end
 
 group :development do

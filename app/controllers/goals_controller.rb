@@ -21,6 +21,11 @@ class GoalsController < ApplicationController
   def save
   end
 
+  def destroy
+      Goal.find_by_id(params[:id]).destroy
+      render json: @goal, except: [:created_at, :updated_at]
+  end
+
   private
     def goal_params
       params.require(:goal).permit(:title, :desc)
