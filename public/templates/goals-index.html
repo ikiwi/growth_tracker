@@ -15,6 +15,6 @@
 <tr ng-repeat="goal in goals">
   <td width="20%">{{goal.title}}</td>
   <td width="70%">{{goal.desc}}</td>
-  <td width="10%"><a ui-sref="goals({goal_id: goal.id})"><button>view</button></a> <button ng-click="deleteGoal({goal_id: goal.id})">delete</button></td>
+  <td width="10%"><a ui-sref="goals({goal_id: goal.id})"><button>view</button></a> <button ng-click="deleteGoal(goal)">delete</button> <button ng-click="complete(goal)">complete</button></td>
 </tr>
 </table>

@@ -29,6 +29,33 @@ app.filter('getById', function() {
   }
 });
 
+app.factory('main', function($http, $stateParams) {
+  var GS;
+  var gStories;
+  return {
+    setGS: function($stateParams) {
+      GS={title: $stateParams.title, text: $stateParams.desc, archived: false}
+      $http.post('/stories', GS).then(
+        function (success) {
+          console.log(success);
+          gStories.push(success.data);
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    },
+    setStories: function($stateParams) {
+      gStories=$stateParams;
+      console.log("gStories")
+      console.log(gStories)
+    },
+    getStories: function() {
+      return gStories;
+    }
+  }
+});
+
 app.config(function($stateProvider, $urlRouterProvider) {
   //
   // For any unmatched url, redirect to /
@@ -39,6 +66,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('main', {
       url: "",
       views: {
+        'featured': {
+          templateUrl: "templates/featured.html",
+          controller: 'FeaturedCtrl'
+        },
         'stories-index': {
           templateUrl: "templates/stories-index.html",
           controller: 'StoriesIndexCtrl'
@@ -64,11 +95,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 });
 
-app.controller('MainCtrl', function ($scope, $http) {
+app.controller('MainCtrl', function ($scope, $http, main) {
+  var query = "/stories.json";
+  $scope.tag = "";
+
+  $http.get(query).then(
+    function (success) {
+      console.log(success);
+      main.setStories(success.data);
+    },
+    function (error) {
+      console.log(error);
+    }
+  );
 });
 
-app.controller('StoriesIndexCtrl', function ($scope, $http) {
-  var query = "/stories.json";
+app.controller('FeaturedCtrl', function ($scope, $http) {
+  var query = "/featured";
   $scope.tag = "";
 
   $http.get(query).then(
@@ -80,6 +123,33 @@ app.controller('StoriesIndexCtrl', function ($scope, $http) {
       console.log(error);
     }
   );
+});
+
+app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter) {
+  var query = "/stories.json";
+  $scope.tag = "";
+
+  $scope.stories = main.getStories();
+  
+  $scope.archive = function($stateParams) {
+    var query = "/stories/" + $stateParams.story_id;
+    $scope.tag = "";
+
+    $http.delete(query).then(
+      function (success) {
+        console.log(success);
+        $scope.stories = main.getStories();
+        if ($scope.stories) {
+          var story = $filter('getById')($scope.stories, $stateParams.story_id);
+          $scope.stories.splice($scope.stories.indexOf(story),1);
+          main.setStories($scope.stories)
+        }
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
 });
 
 app.controller('StoryShowCtrl', function ($scope, $http, $stateParams) {
@@ -97,7 +167,7 @@ app.controller('StoryShowCtrl', function ($scope, $http, $stateParams) {
   );
 });
 
-app.controller('GoalsIndexCtrl', function ($scope, $http, $stateParams, $filter) {
+app.controller('GoalsIndexCtrl', function ($scope, $http, $stateParams, $filter, main) {
 
   var query = "/goals.json";
   $scope.tag = "";
@@ -124,14 +194,14 @@ app.controller('GoalsIndexCtrl', function ($scope, $http, $stateParams, $filter)
     });
 
     $scope.deleteGoal = function($stateParams) {
-      var query = "/goals/" + $stateParams.goal_id;
+      var query = "/goals/" + $stateParams.id;
       $scope.tag = "";
 
       $http.delete(query).then(
         function (success) {
           console.log(success);
           if ($scope.goals) {
-            var goal = $filter('getById')($scope.goals, $stateParams.goal_id);
+            var goal = $filter('getById')($scope.goals, $stateParams.id);
             $scope.goals.splice($scope.goals.indexOf(goal),1);
           }
         },
@@ -139,6 +209,11 @@ app.controller('GoalsIndexCtrl', function ($scope, $http, $stateParams, $filter)
           console.log(error);
         }
       );
+    }
+    
+    $scope.complete = function($stateParams) {
+      main.setGS($stateParams);
+      $scope.deleteGoal($stateParams);
     }
 });
 
