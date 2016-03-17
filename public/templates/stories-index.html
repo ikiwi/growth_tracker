@@ -9,10 +9,19 @@
 
   <td>
   <form ng-show="editing" ng-submit="editing=false">
+  <label for="hashtag">
+    hashtag#
+  </label>
   <input type="text" ng-model="story.hashtag"/><br>
+  <label for="title">
+    title
+  </label>
   <input type="text" ng-model="story.title"/><br>
+  <label for="text">
+    text
+  </label>
   <input type="text" ng-model="story.text"/><br>
-  <button type="submit">Save</button>
+  <button type="submit" ng-click="updateStory(story)">Save</button>
   </form>
   </td>
 

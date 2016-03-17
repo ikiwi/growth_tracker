@@ -162,6 +162,20 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter) {
       }
     );
   }
+  
+  $scope.updateStory = function($stateParams) {
+    var query = "/stories/" + $stateParams.id;
+
+    $http.put(query, $stateParams).then(
+      function (success) {
+        console.log(success);
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
+
 });
 
 app.controller('StoryShowCtrl', function ($scope, $http, $stateParams) {

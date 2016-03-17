@@ -34,12 +34,13 @@ class StoriesController < ApplicationController
       render json: @story, except: [:created_at, :updated_at]
   end
 
-  def save
+  def update
       @story = Story.find_by_id(params[:id])
       @story.hashtag = params[:hashtag]
       @story.title = params[:title]
       @story.text = params[:text]
       @story.save
+      render json: @story, except: [:created_at, :updated_at]
   end
 
   private
