@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
 
   get 'featured' => 'stories#featured'
-  
+
   scope defaults: {format: :json} do
     resources :stories
   end

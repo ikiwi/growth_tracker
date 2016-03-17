@@ -3,4 +3,6 @@ class Story < ActiveRecord::Base
   validates :title, :text, :user_id, presence: true
   belongs_to :users
   scope :featured, -> { where(featured: true) }
+  scope :active, -> { where(archived: false) }
+  scope :archived, -> { where(archived: true) }
 end

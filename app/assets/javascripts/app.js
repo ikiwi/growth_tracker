@@ -45,10 +45,22 @@ app.factory('main', function($http, $stateParams) {
         }
       );
     },
+    initStories: function() {
+      var query = "/stories.json";
+
+      $http.get(query).then(
+        function (success) {
+          console.log(success);
+          gStories=success.data;
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    },
     setStories: function($stateParams) {
       gStories=$stateParams;
-      console.log("gStories")
-      console.log(gStories)
+      console.log(gStories);
     },
     getStories: function() {
       return gStories;
@@ -96,18 +108,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 app.controller('MainCtrl', function ($scope, $http, main) {
-  var query = "/stories.json";
-  $scope.tag = "";
-
-  $http.get(query).then(
-    function (success) {
-      console.log(success);
-      main.setStories(success.data);
-    },
-    function (error) {
-      console.log(error);
-    }
-  );
+   main.initStories();
 });
 
 app.controller('FeaturedCtrl', function ($scope, $http) {
@@ -126,11 +127,22 @@ app.controller('FeaturedCtrl', function ($scope, $http) {
 });
 
 app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter) {
-  var query = "/stories.json";
-  $scope.tag = "";
-
   $scope.stories = main.getStories();
   
+  if ($scope.stories == null) {
+      var query = "/stories.json";
+
+      $http.get(query).then(
+        function (success) {
+          console.log(success);
+          $scope.stories = success.data;
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+  }
+
   $scope.archive = function($stateParams) {
     var query = "/stories/" + $stateParams.story_id;
     $scope.tag = "";
