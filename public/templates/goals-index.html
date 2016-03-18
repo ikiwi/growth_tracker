@@ -1,13 +1,13 @@
 <form ng-submit="addGoal()">
   <label for="title">
     What would you like to do
+  <input type="text" name="title" ng-model="goal.title" required>
   </label>
-  <input type="text" id="title" ng-model="goal.title">
   <br>
   <label for="desc">
     Why is it important to you
+  <input type="text" rquired name="desc" ng-model="goal.desc" required>
   </label>
-  <input type="text" id="desc" ng-model="goal.desc">
   <br>
   <button type="submit">Add Goal</button>
 </form>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317192505) do
+ActiveRecord::Schema.define(version: 20160318063210) do
 
   create_table "goals", force: :cascade do |t|
     t.string   "title"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160317192505) do
     t.boolean  "archived"
     t.integer  "user_id"
     t.boolean  "featured"
+    t.boolean  "published"
   end
 
   create_table "tags", force: :cascade do |t|

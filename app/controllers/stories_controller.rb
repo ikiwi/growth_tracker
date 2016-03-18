@@ -10,7 +10,7 @@ class StoriesController < ApplicationController
   end
 
   def featured
-    @stories = Story.featured.active
+    @stories = Story.published.featured.active
     render json: @stories, except: [:created_at, :updated_at]
   end
   
@@ -29,7 +29,9 @@ class StoriesController < ApplicationController
   def create
       @story = Story.new(story_params)
       @story.user_id = current_user.id
-      @story.featured = true
+      @story.archived = false
+      @story.featured = false
+      @story.published = false
       @story.save
       render json: @story, except: [:created_at, :updated_at]
   end
@@ -39,6 +41,8 @@ class StoriesController < ApplicationController
       @story.hashtag = params[:hashtag]
       @story.title = params[:title]
       @story.text = params[:text]
+      @story.featured = params[:featured]
+      @story.published = params[:published]
       @story.save
       render json: @story, except: [:created_at, :updated_at]
   end

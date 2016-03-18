@@ -5,4 +5,5 @@ class Story < ActiveRecord::Base
   scope :featured, -> { where(featured: true) }
   scope :active, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
+  scope :published, -> { where(published: true) }
 end
