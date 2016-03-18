@@ -1,8 +1,13 @@
 <h2>Your stories:</h2>
 <table>
 <tr ng-repeat="story in stories">
-  <td ng-hide="editing || !isPublishable(story)" width="5%">
+  <td ng-hide="editing || !isPublishable(story) || story.published" width="5%">
     <button ng-click="publish(story)">publish</button>
+    <button ng-click="archive({story_id: story.id})">archive</button>
+    <button ng-click="feature(story)">feature</button>
+  </td>
+  <td ng-hide="editing || !isPublishable(story) || !story.published" width="5%">
+    <button ng-click="unpublish(story)">unpublish</button>
     <button ng-click="archive({story_id: story.id})">archive</button>
     <button ng-click="feature(story)">feature</button>
   </td>

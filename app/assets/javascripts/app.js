@@ -183,6 +183,24 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
     );
   }
 
+
+  $scope.unpublish = function($stateParams) {
+    var query = "/stories/" + $stateParams.id;
+    $scope.tag = "";
+
+    $stateParams.published = false;
+
+    $http.put(query, $stateParams).then(
+      function (success) {
+        console.log(success);
+      },
+       function (error) {
+        console.log(error);
+      }
+    );
+  }
+
+
   $scope.archive = function($stateParams) {
     var query = "/stories/" + $stateParams.story_id;
     $scope.tag = "";

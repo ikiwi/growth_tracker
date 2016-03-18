@@ -16,7 +16,7 @@ RSpec.feature "Goals", type: :feature, js: true do
 
     expect(page).to have_text("Front-end programming")
   end
-  
+
   scenario "#Delete goal" do
     visit "/users/new"
 
@@ -35,4 +35,8 @@ RSpec.feature "Goals", type: :feature, js: true do
 
     expect(page).to have_no_text("Front-end programming")
   end
+
+  scenario "#Complete goal" do
+  end
+
 end
