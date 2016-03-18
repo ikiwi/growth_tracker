@@ -92,7 +92,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    
+
     .state('stories', {
       url: "/stories/{story_id: [0-9]{1,8}}",
       templateUrl: "templates/story-show.html",
@@ -128,7 +128,7 @@ app.controller('FeaturedCtrl', function ($scope, $http) {
 
 app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stateParams) {
   $scope.stories = main.getStories();
-  
+
   if ($scope.stories == null) {
       var query = "/stories.json";
 
@@ -143,12 +143,20 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
       );
   }
 
+  $scope.isPublishable = function($stateParams) {
+    if ($stateParams.title && $stateParams.text && $stateParams.hashtag) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   $scope.feature = function($stateParams) {
     var query = "/stories/" + $stateParams.id;
     $scope.tag = "";
 
     $stateParams.featured = true;
-    
+
     $http.put(query, $stateParams).then(
       function (success) {
         console.log(success);
@@ -164,7 +172,7 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
     $scope.tag = "";
 
     $stateParams.published = true;
-    
+
     $http.put(query, $stateParams).then(
       function (success) {
         console.log(success);
@@ -194,13 +202,30 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
       }
     );
   }
-  
+
   $scope.updateStory = function($stateParams) {
     var query = "/stories/" + $stateParams.id;
 
     $http.put(query, $stateParams).then(
       function (success) {
         console.log(success);
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  }
+
+  $scope.cancelUpdate = function($stateParams) {
+    var query = "/stories/" + $stateParams.id;
+    $scope.tag = "";
+
+    $http.get(query).then(
+      function (success) {
+        console.log(success);
+        $stateParams.title = success.data.title;
+        $stateParams.text = success.data.text;
+        $stateParams.hashtag = success.data.hashtag;
       },
       function (error) {
         console.log(error);
@@ -268,7 +293,7 @@ app.controller('GoalsIndexCtrl', function ($scope, $http, $stateParams, $filter,
         }
       );
     }
-    
+
     $scope.complete = function($stateParams) {
       main.setGS($stateParams);
       $scope.deleteGoal($stateParams);

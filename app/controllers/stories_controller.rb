@@ -5,15 +5,17 @@ class StoriesController < ApplicationController
   def index
     if (current_user)
       @stories = Story.active.where(user_id: current_user.id)
-      render json: @stories, except: [:created_at, :updated_at]
+    else
+      @stories = Story.active.published
     end
+    render json: @stories, except: [:created_at, :updated_at]
   end
 
   def featured
     @stories = Story.published.featured.active
     render json: @stories, except: [:created_at, :updated_at]
   end
-  
+
   def destroy
     @story = Story.find_by_id(params[:id])
     @story.archived = true
@@ -25,7 +27,7 @@ class StoriesController < ApplicationController
     @story = Story.find_by_id(params[:id])
     render json: @story, except: [:created_at, :updated_at]
   end
-  
+
   def create
       @story = Story.new(story_params)
       @story.user_id = current_user.id
@@ -49,7 +51,7 @@ class StoriesController < ApplicationController
 
   private
     def story_params
-      params.require(:story).permit(:title, :text, :archived)
+      params.require(:story).permit(:title, :text)
     end
 
 end

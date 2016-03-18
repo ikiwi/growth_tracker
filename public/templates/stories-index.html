@@ -1,31 +1,35 @@
 <h2>Your stories:</h2>
 <table>
 <tr ng-repeat="story in stories">
-  <td ng-hide="editing" width="5%">
+  <td ng-hide="editing || !isPublishable(story)" width="5%">
     <button ng-click="publish(story)">publish</button>
     <button ng-click="archive({story_id: story.id})">archive</button>
     <button ng-click="feature(story)">feature</button>
   </td>
-<!--  <td ng-hide="editing" ng-click="editing=true" width="2%"><button ng-hide="editing" ng-click="publish({story_id: story.id})">publish</button></td>-->
+  <td ng-hide="editing || isPublishable(story)" width="5%">
+    <button ng-click="archive({story_id: story.id})">archive</button>
+    <button ng-click="feature(story)">feature</button>
+  </td>
   <td ng-hide="editing" ng-click="editing=true" width="10%">{{story.title}}</td>
   <td ng-hide="editing" ng-click="editing=true" width="5%">#{{story.hashtag}}</td>
   <td ng-hide="editing" ng-click="editing=true" width="80%">{{story.text}}</td>
 
-  <td>
+  <td colspan="4">
   <form ng-show="editing" ng-submit="editing=false">
   <label for="hashtag">
     hashtag#
   </label>
-  <input type="text" ng-model="story.hashtag"/><br>
+  <input type="text" ng-model="story.hashtag" size="100%"/><br>
   <label for="title">
     title
   </label>
-  <input type="text" ng-model="story.title"/><br>
+  <input type="text" ng-model="story.title" size="100%"/><br>
   <label for="text">
     text
   </label>
-  <input type="text" ng-model="story.text"/><br>
-  <button type="submit" ng-click="updateStory(story)">Save</button>
+  <textarea ng-model="story.text" rows="5" cols="100%"></textarea><br>
+  <button type="submit" ng-click="updateStory(story)">save</button>
+  <button type="button" ng-click="editing=false; cancelUpdate(story)">cancel</button>
   </form>
   </td>
 
