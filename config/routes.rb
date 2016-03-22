@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :goals
 
+  resources :tags
+
   resources :sessions, only: [:new, :create]
 
   delete 'logout' => 'sessions#destroy'

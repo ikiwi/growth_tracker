@@ -11,7 +11,7 @@
 <input type="text" ng-model="tag"/>
 <p></p>
 <table>
-<tr ng-repeat="story in stories" ng-show="story.hashtag.toLowerCase() == tag.toLowerCase()">
+<tr ng-repeat="story in stories" ng-show="storiesWithTag(tag.toLowerCase())">
   <td width="20%">{{story.title}}</td>
   <td width="80%">{{story.text}}</td>
 </tr>

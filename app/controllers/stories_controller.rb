@@ -40,7 +40,14 @@ class StoriesController < ApplicationController
 
   def update
       @story = Story.find_by_id(params[:id])
-      @story.hashtag = params[:hashtag]
+      byebug
+      @tag = Tag.find_by(hashtags: params[:hashtag])
+      if @tag == nil
+        @tag = Tag.new(hashtags: params[:hashtag])
+        @tag.save
+      end
+      @story_tag = StoryTag.new(story_id: params[:id], tag_id: @tag.id)
+      @story_tag.save
       @story.title = params[:title]
       @story.text = params[:text]
       @story.featured = params[:featured]

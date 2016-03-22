@@ -1,5 +1,6 @@
 class Story < ActiveRecord::Base
-  has_and_belongs_to_many :tags
+  has_many :story_tags, class_name: "StoryTag"
+  has_many :tags, :through => :story_tags
   validates :title, :text, :user_id, presence: true
   belongs_to :users
   scope :featured, -> { where(featured: true) }

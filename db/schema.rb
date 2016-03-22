@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160318063210) do
+ActiveRecord::Schema.define(version: 20160322225904) do
 
   create_table "goals", force: :cascade do |t|
     t.string   "title"
@@ -31,6 +31,20 @@ ActiveRecord::Schema.define(version: 20160318063210) do
     t.integer  "user_id"
     t.boolean  "featured"
     t.boolean  "published"
+  end
+
+  create_table "story_tags", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "story_with_hashtags", force: :cascade do |t|
+    t.integer  "story_id"
+    t.integer  "hashtag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", force: :cascade do |t|
