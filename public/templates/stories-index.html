@@ -16,7 +16,9 @@
     <button ng-click="feature(story)">feature</button>
   </td>
   <td ng-hide="editing" ng-click="editing=true" width="10%">{{story.title}}</td>
-  <td ng-hide="editing" ng-click="editing=true" width="5%">#{{story.hashtag}}</td>
+  <td ng-hide="editing" ng-click="editing=true" width="5%">
+    #{{convertToString(story)}}
+  </td>
   <td ng-hide="editing" ng-click="editing=true" width="80%">{{story.text}}</td>
 
   <td colspan="4">
@@ -24,7 +26,7 @@
   <label for="hashtag">
     hashtag#
   </label>
-  <input type="text" ng-model="story.hashtag" size="100%"/><br>
+  <input type="text" ng-model="hashtags" ng-init="hashtags=convertToString(story)" size="100%"/><br>
   <label for="title">
     title
   </label>

@@ -7,4 +7,5 @@ class Story < ActiveRecord::Base
   scope :active, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
   scope :published, -> { where(published: true) }
+  accepts_nested_attributes_for :tags
 end

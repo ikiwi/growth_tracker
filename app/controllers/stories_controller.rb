@@ -8,12 +8,11 @@ class StoriesController < ApplicationController
     else
       @stories = Story.active.published
     end
-    render json: @stories, except: [:created_at, :updated_at]
   end
 
   def featured
     @stories = Story.published.featured.active
-    render json: @stories, except: [:created_at, :updated_at]
+    render :index
   end
 
   def destroy
@@ -25,7 +24,6 @@ class StoriesController < ApplicationController
 
   def show
     @story = Story.find_by_id(params[:id])
-    render json: @story, except: [:created_at, :updated_at]
   end
 
   def create
@@ -40,20 +38,12 @@ class StoriesController < ApplicationController
 
   def update
       @story = Story.find_by_id(params[:id])
-      byebug
-      @tag = Tag.find_by(hashtags: params[:hashtag])
-      if @tag == nil
-        @tag = Tag.new(hashtags: params[:hashtag])
-        @tag.save
-      end
-      @story_tag = StoryTag.new(story_id: params[:id], tag_id: @tag.id)
-      @story_tag.save
       @story.title = params[:title]
       @story.text = params[:text]
       @story.featured = params[:featured]
       @story.published = params[:published]
       @story.save
-      render json: @story, except: [:created_at, :updated_at]
+    render :show
   end
 
   private

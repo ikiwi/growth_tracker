@@ -112,7 +112,7 @@ app.controller('MainCtrl', function ($scope, $http, main) {
 });
 
 app.controller('FeaturedCtrl', function ($scope, $http) {
-  var query = "/featured";
+  var query = "/featured.json";
   $scope.tag = "";
 
   $http.get(query).then(
@@ -141,6 +141,14 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
           console.log(error);
         }
       );
+  }
+  $scope.convertToString = function($story) {
+    var hashtags = ""
+    for (var i=0; i < $story.hashtags.length; i++) {
+      hashtags = hashtags.concat($story.hashtags[i], "#")
+    }
+    hashtags = hashtags.substring(0,hashtags.length-1)
+    return hashtags
   }
 
   $scope.isPublishable = function($stateParams) {
@@ -223,7 +231,6 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
 
   $scope.updateStory = function($stateParams) {
     var query = "/stories/" + $stateParams.id;
-
     $http.put(query, $stateParams).then(
       function (success) {
         console.log(success);
@@ -241,6 +248,7 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
     $http.get(query).then(
       function (success) {
         console.log(success);
+        debugger
         $stateParams.title = success.data.title;
         $stateParams.text = success.data.text;
         $stateParams.hashtag = success.data.hashtag;
