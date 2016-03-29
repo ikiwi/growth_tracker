@@ -37,12 +37,21 @@ class StoriesController < ApplicationController
   end
 
   def update
-      @story = Story.find_by_id(params[:id])
-      @story.title = params[:title]
-      @story.text = params[:text]
-      @story.featured = params[:featured]
-      @story.published = params[:published]
-      @story.save
+    @story = Story.find_by_id(params[:$story][:id])
+    @story.title = params[:$story][:title]
+    @story.text = params[:$story][:text]
+    @story.featured = params[:$story][:featured]
+    @story.published = params[:$story][:published]
+    @hashtags = []
+    params[:hashtags].each do |t|
+      tag = Tag.find_by(hashtags: t)
+      if tag == nil
+        tag = Tag.create(hashtags: t)
+      end
+      @hashtags << tag.id
+    end
+    @story.tag_ids = @hashtags
+    @story.save
     render :show
   end
 

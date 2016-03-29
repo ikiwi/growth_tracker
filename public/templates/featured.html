@@ -3,7 +3,7 @@
 <tr ng-repeat="story in stories">
   <td width="20%">{{story.title}}</td>
   <td width="60%">{{story.text}}</td>
-  <td width="15%">#{{story.hashtag}}</td>
+  <td width="15%">#{{convertToString(story.hashtags)}}</td>
   <td width="5%"><a ui-sref="stories({story_id: story.id})">view</a></td>
 </tr>
 </table>

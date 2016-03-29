@@ -124,6 +124,13 @@ app.controller('FeaturedCtrl', function ($scope, $http) {
       console.log(error);
     }
   );
+  $scope.convertToString = function($stateParams) {
+    var hashtags = ""
+    for (var i=0; i < $stateParams.length; i++)
+      hashtags = hashtags.concat($stateParams[i], "#")
+    hashtags = hashtags.substring(0, hashtags.length-1)
+    return hashtags
+  }
 });
 
 app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stateParams) {
@@ -142,12 +149,11 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
         }
       );
   }
-  $scope.convertToString = function($story) {
+  $scope.convertToString = function($stateParams) {
     var hashtags = ""
-    for (var i=0; i < $story.hashtags.length; i++) {
-      hashtags = hashtags.concat($story.hashtags[i], "#")
-    }
-    hashtags = hashtags.substring(0,hashtags.length-1)
+    for (var i=0; i < $stateParams.length; i++)
+      hashtags = hashtags.concat($stateParams[i], "#")
+    hashtags = hashtags.substring(0, hashtags.length-1)
     return hashtags
   }
 
@@ -173,6 +179,14 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
         console.log(error);
       }
     );
+
+    $scope.convertToString = function($stateParams) {
+      var hashtags = ""
+      for (var i=0; i < $stateParams.length; i++)
+        hashtags = hashtags.concat($stateParams[i], "#")
+      hashtags = hashtags.substring(0, hashtags.length-1)
+      return hashtags
+    }
   }
 
   $scope.publish = function($stateParams) {
@@ -229,9 +243,10 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
     );
   }
 
-  $scope.updateStory = function($stateParams) {
-    var query = "/stories/" + $stateParams.id;
-    $http.put(query, $stateParams).then(
+  $scope.updateStory = function($story, $hashtags) {
+    var query = "/stories/" + $story.id;
+    var hashtags = $hashtags.split("#");
+    $http.put(query, {$story, hashtags}).then(
       function (success) {
         console.log(success);
       },
@@ -241,17 +256,16 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
     );
   }
 
-  $scope.cancelUpdate = function($stateParams) {
-    var query = "/stories/" + $stateParams.id;
+  $scope.cancelUpdate = function($story, $hashtags) {
+    var query = "/stories/" + $story.id;
     $scope.tag = "";
 
     $http.get(query).then(
       function (success) {
         console.log(success);
-        debugger
-        $stateParams.title = success.data.title;
-        $stateParams.text = success.data.text;
-        $stateParams.hashtag = success.data.hashtag;
+        $story.title = success.data.title;
+        $story.text = success.data.text;
+        $hashtags = success.data.hashtags;
       },
       function (error) {
         console.log(error);

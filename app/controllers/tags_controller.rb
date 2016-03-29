@@ -5,7 +5,7 @@ class TagsController < ApplicationController
   end
 
   def show
-    @matches = Tag.where(hashtags: params[:id])
+    @matches = Tag.where(id: params[:id])
     render json: @matches, except: [:created_at, :updated_at]
   end
 
