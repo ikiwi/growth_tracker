@@ -52,6 +52,13 @@ app.factory('main', function($http, $stateParams) {
         function (success) {
           console.log(success);
           gStories=success.data;
+          for (var s=0; s < gStories.length; s++) {
+            var hashtags = ""
+            for (var i=0; i < gStories[s].hashtags.length; i++)
+              hashtags = hashtags.concat(gStories[s].hashtags[i], "#")
+            hashtags = hashtags.substring(0, hashtags.length-1)
+            gStories[s].flat_hashtags = hashtags
+          }
         },
         function (error) {
           console.log(error);
@@ -151,9 +158,11 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
   }
   $scope.convertToString = function($stateParams) {
     var hashtags = ""
+
     for (var i=0; i < $stateParams.length; i++)
       hashtags = hashtags.concat($stateParams[i], "#")
     hashtags = hashtags.substring(0, hashtags.length-1)
+
     return hashtags
   }
 
@@ -243,17 +252,23 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
     );
   }
 
-  $scope.updateStory = function($story, $hashtags) {
+  $scope.updateStory = function($story) {
     var query = "/stories/" + $story.id;
-    var hashtags = $hashtags.split("#");
-    $http.put(query, {$story, hashtags}).then(
-      function (success) {
-        console.log(success);
-      },
-      function (error) {
-        console.log(error);
+    var hashtags = $story.flat_hashtags.split("#");
+    for (var i = 0; i < hashtags.length; i++) {
+      if (hashtags[i] == "") {
+        hashtags.splice(i, 1);
+        i--;
       }
-    );
+    }
+    $story.flat_hashtags = this.convertToString(hashtags)
+    $http.put(query, {$story, hashtags}).then(
+    function (success) {
+      console.log(success);
+    },
+    function (error) {
+      console.log(error);
+    });
   }
 
   $scope.cancelUpdate = function($story, $hashtags) {
@@ -265,7 +280,11 @@ app.controller('StoriesIndexCtrl', function ($scope, $http, main, $filter, $stat
         console.log(success);
         $story.title = success.data.title;
         $story.text = success.data.text;
-        $hashtags = success.data.hashtags;
+        hashtags = ""
+        for (var i=0; i < success.data.hashtags.length; i++)
+          hashtags = hashtags.concat(success.data.hashtags[i], "#")
+        hashtags = hashtags.substring(0, hashtags.length-1)
+        $story.flat_hashtags = hashtags;
       },
       function (error) {
         console.log(error);
