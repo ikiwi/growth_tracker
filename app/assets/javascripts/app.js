@@ -141,6 +141,18 @@ app.controller('FeaturedCtrl', function ($scope, $http) {
       console.log(error);
     }
   );
+
+  $scope.isMatch = function($hashtags, $tag){
+    if ($tag == "")
+      return true
+    for (var i=0; i< $hashtags.length; i++) {
+      if ($tag.toLowerCase() == $hashtags[i].toLowerCase().substr(0, $tag.length)) {
+        return true
+      }
+    }
+    return false
+  }
+
   $scope.convertToString = function($stateParams) {
     var hashtags = ""
     for (var i=0; i < $stateParams.length; i++)
