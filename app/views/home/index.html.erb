@@ -4,23 +4,20 @@
   <% end %>
 </div>
 
+<% if !current_user %>
+  <div>
+      <%= form_for :user, url: sessions_path do |f| %>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+        <br>
+        <%= f.label :password %>
+        <%= f.text_field :password %>
+        <br>
+        <%= f.submit "Login" %>
+      <% end %>
+  </div>
+  <%= button_to "Sign up", new_user_path, method: :get %>
+<% end %>
+
 <ui-view></ui-view>
 <div ui-view="featured"></div>
-
-
-<% if current_user %>
-<nav class="bar bar-tab">
-  <a class="tab-item" ui-sref="main">
-    <span class="icon icon-home"></span>
-    <span class="tab-label">Home</span>
-  </a>
-  <a class="tab-item" ui-sref="goals">
-    <span class="icon icon-share"></span>
-    <span class="tab-label">Goals</span>
-  </a>
-  <a class="tab-item" ui-sref="stories">
-    <span class="icon icon-list"></span>
-    <span class="tab-label">Stories</span>
-  </a>
-</nav>
-<% end %>
