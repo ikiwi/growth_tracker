@@ -100,16 +100,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
       }
     })
 
-    .state('stories', {
-      url: "/stories/{story_id: [0-9]{1,8}}",
-      templateUrl: "templates/story-show.html",
-      controller: 'StoryShowCtrl'
-    })
-
     .state('goals', {
+      url: "/goals",
+      templateUrl: "templates/goals-index.html",
+      controller: 'GoalsIndexCtrl'
+    })
+    .state('goals.detail', {
       url: "/goals/{goal_id: [0-9]{1,8}}",
       templateUrl: "templates/goal-show.html",
       controller: 'GoalShowCtrl'
+    })
+
+    .state('stories', {
+      url: "/stories",
+      templateUrl: "templates/stories-index.html",
+      controller: 'StoriesIndexCtrl'
+    })
+    .state('stories.detail', {
+      url: "/stories/{story_id: [0-9]{1,8}}",
+      templateUrl: "templates/story-show.html",
+      controller: 'StoryShowCtrl'
     })
 
 });

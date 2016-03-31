@@ -4,16 +4,57 @@
 <!-- UI-Router -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
 
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 <html lang="en" ng-app="growth_tracker">
+
 <head>
-  <title>GrowthTracker</title>
+  <header class="bar bar-nav">
+    <% if current_user.present? %>
+      <h1 class="title">
+        Hello <%= current_user.username %>!
+      </h1>
+      <% if content_for :back %>
+        <button class="btn pull-left">
+          <%=yield :back%>
+        </button>
+      <% end %>
+      <button class="btn pull-right">
+        <%= button_to "Logout", logout_path, method: :delete %>
+      </button>
+    <% else %>
+        <h1>Hello!</h1>
+        <div>
+            <%= form_for :user, url: sessions_path do |f| %>
+              <%= f.label :email %>
+              <%= f.text_field :email %>
+              <br>
+              <%= f.label :password %>
+              <%= f.text_field :password %>
+              <br>
+              <%= f.submit "Login" %>
+            <% end %>
+        </div>
+        <%= button_to "Sign up", new_user_path, method: :get %>
+      <% end %>
+  </header>
   <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body ng-controller="MainCtrl">
-
-<%= yield %>
-
+     <%= yield %>
 </body>
+
 </html>
