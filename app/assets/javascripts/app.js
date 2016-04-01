@@ -84,20 +84,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('main', {
       url: "",
-      views: {
-        'featured': {
-          templateUrl: "templates/featured.html",
-          controller: 'FeaturedCtrl'
-        },
-        'stories-index': {
-          templateUrl: "templates/stories-index.html",
-          controller: 'StoriesIndexCtrl'
-        },
-        'goals-index': {
-          templateUrl: "templates/goals-index.html",
-          controller: 'GoalsIndexCtrl'
-        }
-      }
+      templateUrl: "templates/featured.html",
+      controller: 'FeaturedCtrl'
     })
 
     .state('goals', {
@@ -105,7 +93,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: "templates/goals-index.html",
       controller: 'GoalsIndexCtrl'
     })
-    .state('goals.detail', {
+    .state('goals_detail', {
       url: "/goals/{goal_id: [0-9]{1,8}}",
       templateUrl: "templates/goal-show.html",
       controller: 'GoalShowCtrl'
@@ -116,7 +104,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: "templates/stories-index.html",
       controller: 'StoriesIndexCtrl'
     })
-    .state('stories.detail', {
+    .state('stories_detail', {
       url: "/stories/{story_id: [0-9]{1,8}}",
       templateUrl: "templates/story-show.html",
       controller: 'StoryShowCtrl'
