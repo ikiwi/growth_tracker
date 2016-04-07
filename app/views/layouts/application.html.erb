@@ -10,6 +10,14 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+<!-- bootstrap css -->
+  <link type="text/css"
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet.min.css">
+  <link type="text/css"
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet-theme-ios.css">
+
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
@@ -19,21 +27,32 @@
 <html lang="en" ng-app="growth_tracker">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+
   <header class="bar bar-nav">
     <% if current_user.present? %>
       <h1 class="title">
+      <% if content_for? :title %>
+        <%=yield :title %>
+      <% else %>
         Hello <%= current_user.username %>!
+      <% end %>
       </h1>
       <% if content_for :back %>
-        <button class="btn pull-left">
+        <button class="btn" style="float: left">
           <%=yield :back%>
         </button>
       <% end %>
-      <button class="btn pull-right">
-        <%= button_to "Logout", logout_path, method: :delete %>
+      <button class="btn" style="float: right">
+        <%= link_to "Logout", logout_path, method: :delete %>
       </button>
     <% else %>
-        <h1>Hello!</h1>
+      <h1>Hello!
+      <button class="btn" style="float: right">
+        <%= link_to "Sign up", new_user_path, method: :get %>
+      </button>
+      </h1>
     <% end %>
   </header>
   <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>

@@ -5,7 +5,7 @@
 </div>
 
 <% if !current_user %>
-  <div>
+  <div class="app">
       <%= form_for :user, url: sessions_path do |f| %>
         <%= f.label :email %>
         <%= f.text_field :email %>
@@ -16,7 +16,7 @@
         <%= f.submit "Login" %>
       <% end %>
   </div>
-  <%= button_to "Sign up", new_user_path, method: :get %>
 <% end %>
-
+<div class="app">
 <ui-view></ui-view>
+</div>
